@@ -1,11 +1,11 @@
 # 🍔 Sistema de Gerenciamento de Pedidos
 
 ## 👥 Equipe
-- Membro 1: __________________
-- Membro 2: __________________
-- Membro 3: __________________
-- Membro 4: __________________
-- Membro 5: __________________
+- Membro 1: Ian Neves
+- Membro 2: David Cairo
+- Membro 3: Paulo Soares
+- Membro 4: Pedro Silveira
+- Membro 5: Jefte Santos
 
 ---
 
@@ -97,5 +97,5 @@ O sistema permite:
 ## ▶️ Como Executar
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/usuario/repositorio.git
+   git clone https://github.com/usuario/repositorio.git](https://github.com/IanSNeves/Sistema-de-Pedidos
    cd repositorio
