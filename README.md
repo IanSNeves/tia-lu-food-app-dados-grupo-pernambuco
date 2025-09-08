@@ -97,5 +97,5 @@ O sistema permite:
 ## ▶️ Como Executar
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/usuario/repositorio.git](https://github.com/IanSNeves/Sistema-de-Pedidos
+   git clone https://github.com/usuario/repositorio.git
    cd repositorio
