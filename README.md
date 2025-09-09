@@ -1,5 +1,10 @@
 # 🍔 Sistema de Gerenciamento de Pedidos
 
+## Documentação
+- [Clique aqui para acessar.](https://bold-fireplant-8eb.notion.site/Documenta-o-2688254211a2803b97d9e71366eed8a1)
+
+---
+
 ## 👥 Equipe
 - Membro 1: Ian Neves
 - Membro 2: David Cairo
