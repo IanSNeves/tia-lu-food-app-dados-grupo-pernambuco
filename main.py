@@ -54,6 +54,10 @@ def menu_principal():
         
         if opcao == '1':
             menu_gerenciar_itens()
+        elif opcao == '2':
+            menu_gerenciar_pedidos()
+        elif opcao == '3':
+            menu_consultar_pedidos()
         elif opcao == '4':
             print("Saindo do sistema...")
             break
@@ -107,6 +111,117 @@ def menu_gerenciar_itens():
         else:
             input("Opção inválida. Pressione Enter para continuar...")
 
+def menu_gerenciar_pedidos():
+    """Menu para gerenciar pedidos."""
+    global proximo_codigo_pedido
+    while True:
+        limpar_tela()
+        print("--- Gerenciar Pedidos ---")
+        print("1. Criar Pedido")
+        print("2. Processar Pedidos Pendentes")
+        print("3. Voltar")
+        
+        opcao = input("\nEscolha uma opção: ")
+        
+        if opcao == '1':
+            limpar_tela()
+            print("--- Criar Novo Pedido ---")
+            if not itens_cardapio:
+                print("Não é possível criar um pedido. Nenhum item cadastrado.")
+                input("Pressione Enter para continuar...")
+                continue
+            
+            itens_pedido = []
+            
+            while True:
+                print("\nItens disponíveis:")
+                for item in itens_cardapio:
+                    print(f"[{item.codigo}] {item.nome} - R${item.preco:.2f}")
+                
+                codigo_item = input("Digite o código do item (ou 'f' para finalizar o pedido): ")
+                
+                if codigo_item.lower() == 'f':
+                    if itens_pedido:
+                        novo_pedido = Pedido(proximo_codigo_pedido, itens_pedido)
+                        fila_pedidos_pendentes.append(novo_pedido)  # Adiciona à fila de pendentes [cite: 83]
+                        proximo_codigo_pedido += 1
+                        print("\nPedido criado com sucesso! Aguardando aprovação.")
+                    else:
+                        print("Pedido não pode ser vazio. Adicione pelo menos um item.")
+                    break
+                
+                try:
+                    codigo_item = int(codigo_item)
+                    item_encontrado = next((item for item in itens_cardapio if item.codigo == codigo_item), None)
+                    if item_encontrado:
+                        itens_pedido.append(item_encontrado)
+                        print(f"Item '{item_encontrado.nome}' adicionado ao pedido.")
+                    else:
+                        print("Item não encontrado.")
+                except ValueError:
+                    print("Entrada inválida. Digite um código de item ou 'f'.")
+            
+            input("Pressione Enter para continuar...")
+            
+        elif opcao == '2':
+            processar_pedidos_pendentes()
+
+            
+        elif opcao == '3':
+            break
+        else:
+            input("Opção inválida. Pressione Enter para continuar...")
+
+def menu_consultar_pedidos():
+    """Menu para consultar pedidos."""
+    limpar_tela()
+    print("--- Consultar Pedidos ---")
+    print("1. Exibir todos os pedidos")
+    print("2. Filtrar por status")
+    print("3. Voltar")
+    
+    opcao = input("\nEscolha uma opção: ")
+    
+    if opcao == '1':
+        limpar_tela()
+        print("--- Todos os Pedidos ---")
+        todos_pedidos = fila_pedidos_pendentes + fila_pedidos_aceitos + fila_pedidos_prontos
+        if not todos_pedidos:
+            print("Nenhum pedido no sistema.")
+        else:
+            for pedido in todos_pedidos:
+                print(pedido)
+        input("\nPressione Enter para continuar...")
+    
+    elif opcao == '2':
+        # Lógica de filtro será implementada em outra sprint
+        print("\nFuncionalidade em desenvolvimento. Filtro por status será adicionado aqui.")
+        input("Pressione Enter para continuar...")
+
+    elif opcao == '3':
+        return
+    
+    else:
+        input("Opção inválida. Pressione Enter para continuar...")
+
+def processar_pedidos_pendentes():
+    limpar_tela()
+    print("--- Processar Pedidos Pendentes ---")
+    if not fila_pedidos_pendentes:
+        print("Nenhum pedido pendente para processar.")
+    else:
+        Pedido_a_processar = fila_pedidos_pendentes[0]
+        print(f"Pedido {Pedido_a_processar.codigo} selecionado para processamento.")
+
+        confirmado = input("\nDeseja confirmar esse pedido? (s/n): ")
+        if confirmado == 's':
+            fila_pedidos_pendentes.remove(Pedido_a_processar)
+            fila_pedidos_aceitos.append(Pedido_a_processar)
+            Pedido_a_processar.status = "EM PREPARO"
+        else:
+            print("Pedido não confirmado. Ele permanece na fila de pendentes.")
+    
+    input("Pressione Enter para continuar...")
 
 
 # Inicia o sistema
