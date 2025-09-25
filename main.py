@@ -5,6 +5,10 @@ proximo_codigo_pedido = 1
 fila_pedidos_pendentes = []
 fila_pedidos_aceitos = []
 fila_pedidos_prontos = []
+# lista de clientes
+clientes = []
+proximo_codigo_cliente = 1
+
 
 # --- Loop Principal do Programa ---
 while True:
@@ -15,7 +19,8 @@ while True:
     print("1. Gerenciar Menu de Itens")
     print("2. Gerenciar Menu de Pedidos")
     print("3. Consultas e Relatórios")
-    print("4. Sair do Sistema")
+    print("4. Cadastrar Cliente")
+    print("5. Sair do Sistema")
     print("="*40)
     
     opcao_principal = input("Escolha uma opção: ")
@@ -283,6 +288,49 @@ while True:
         else:
             input("Opção inválida. Pressione Enter para continuar...")
     
+    # === MÓDULO 4: CADASTRAR CLIENTE ===============
+    # --- Cadastrar Cliente
+    elif opcao_principal == '4':
+        print("\n" * 50)
+        print("-- Cadastro de Novo Cliente --")
+        print("1. Cadastrar novo cliente")
+        print("2. Listar todos os clientes")
+        print("3. Voltar ao Menu Principal")
+        opcao_clientes = input("Escolha uma opção: ")
+
+        if opcao_clientes == '1':
+            nome = input("Nome do cliente: ")
+            telefone = input("Telefone do cliente: ")
+            endereco = input("Endereço do cliente: ")
+            
+            # Cria o cliente
+            nome_cliente = {
+                'código': proximo_codigo_cliente,
+                'nome': nome,
+                'telefone': telefone,
+                'endereco': endereco
+            }
+
+            clientes.append(nome_cliente)
+            print(f"\nCliente '{nome}' cadastrado com sucesso! Código: {nome_cliente['código']}")
+            proximo_codigo_cliente += 1
+        
+        elif opcao_clientes == '2':
+            print("\n" * 50)
+            print("-- Lista de Clientes Cadastrados --")
+            if not clientes:
+                print("Nenhum cliente cadastrado.")
+            else:
+                for cliente in clientes:
+                    print(f"cód: {cliente['código']} | Nome: {cliente['nome']} | Telefone: {cliente['telefone']}")
+
+        elif opcao_clientes == '3':
+            pass
+
+        else:
+            input("Opção inválida. Pressione Enter para continuar...")
+
+
     # === SAÍDA DO SISTEMA
     elif opcao_principal == '4':
         print("Saindo do sistema. Obrigado por usar o Tia Lu Delivery!")
