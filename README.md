@@ -1,3 +1,39 @@
+1. FUNCIONALIDADES FALTANTES
+
+Gerenciamento de Clientes
+- [ ] Cadastrar Cliente: Criar uma nova seção no menu para gerenciar clientes, permitindo, no mínimo, cadastrá-los (com código, nome, etc.).
+- [ ] Listar Clientes: Implementar uma forma de consultar os clientes já cadastrados.
+
+### Gerenciamento de Itens
+- [ ] Atualizar Item: Adicionar ao menu a opção "Atualizar Item" para modificar nome, descrição, preço e estoque.
+
+### Gerenciamento de Pedidos
+- [ ] Associar Cliente a um Pedido: Ao criar um pedido, o sistema deve perguntar e associar um cliente cadastrado.
+- [ ] Aplicar Cupom de Desconto: Implementar a lógica para aplicar um cupom de desconto na criação do pedido.
+- [ ] Atualizar Status de Pedido: Criar uma função no menu para permitir a alteração manual do status de um pedido existente.
+- [ ] Cancelar Pedido: Implementar a opção para cancelar um pedido, seguindo a regra de que só é possível se o status for "AGUARDANDO APROVACAO" ou "ACEITO".
+
+### Fluxo de Pedidos
+- [ ] Gestão da Fila de Pedidos Prontos: Implementar a lógica para mover os pedidos, após o preparo, para a "fila_pedidos_prontos".
+
+### Consultas
+- [ ] Filtrar Pedidos por Status: Implementar a funcionalidade de filtrar pedidos por status.
+
+
+# 2. CORREÇÕES E INCONSISTÊNCIAS
+
+### Fluxo de Status dos Pedidos
+- [ ] Corrigir Status Incorretos: Ao aceitar um pedido, o status deve mudar para "ACEITO" e depois para "FAZENDO", em vez de ir direto para "EM PREPARO".
+- [ ] Implementar Status Faltantes: Garantir que todos os status definidos no documento sejam utilizados no fluxo do programa (ACEITO, FEITO, ESPERANDO ENTREGADOR, SAIU PARA ENTREGA, ENTREGUE, CANCELADO, REJEITADO).
+- [ ] Implementar Lógica de Rejeição: Quando um pedido pendente não é confirmado, seu status deve ser alterado para "REJEITADO" e ele deve ser tratado adequadamente, em vez de apenas permanecer na fila.
+
+### Estrutura e Lógica do Código
+- [ ] Melhorar Processamento de Pedidos: Considerar um loop ou outra forma de permitir que o atendente processe vários pedidos pendentes em sequência, sem precisar voltar ao menu principal a cada pedido processado.
+
+
+
+
+
 # 🍔 Sistema de Gerenciamento de Pedidos
 
 ## Documentação
