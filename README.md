@@ -1,11 +1,11 @@
 1. FUNCIONALIDADES FALTANTES
 
 Gerenciamento de Clientes
-- [ ] Cadastrar Cliente: Criar uma nova seção no menu para gerenciar clientes, permitindo, no mínimo, cadastrá-los (com código, nome, etc.).
+- [x] Cadastrar Cliente: Criar uma nova seção no menu para gerenciar clientes, permitindo, no mínimo, cadastrá-los (com código, nome, etc.).
 - [ ] Listar Clientes: Implementar uma forma de consultar os clientes já cadastrados.
 
 ### Gerenciamento de Itens
-- [ ] Atualizar Item: Adicionar ao menu a opção "Atualizar Item" para modificar nome, descrição, preço e estoque.
+- [x] Atualizar Item: Adicionar ao menu a opção "Atualizar Item" para modificar nome, descrição, preço e estoque.
 
 ### Gerenciamento de Pedidos
 - [ ] Associar Cliente a um Pedido: Ao criar um pedido, o sistema deve perguntar e associar um cliente cadastrado.
