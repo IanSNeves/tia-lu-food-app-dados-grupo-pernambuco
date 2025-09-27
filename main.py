@@ -1,13 +1,34 @@
-cardapio = []
-proximo_codigo_item = 1
-todos_os_pedidos = []
-proximo_codigo_pedido = 1
-fila_pedidos_pendentes = []
+cardapio = [
+    {'id': 1, 'nome': 'Hambúrguer Clássico', 'descrição': 'Pão, carne, queijo, alface e tomate', 'preço': 25.50, 'estoque': 50},
+    {'id': 2, 'nome': 'Batata Frita', 'descrição': 'Porção de 300g de batata frita crocante', 'preço': 15.00, 'estoque': 100},
+    {'id': 3, 'nome': 'Refrigerante Lata', 'descrição': 'Coca-Cola, Guaraná ou Fanta', 'preço': 5.00, 'estoque': 200},
+    {'id': 4, 'nome': 'Pizza Margherita', 'descrição': 'Molho de tomate, mussarela e manjericão', 'preço': 45.00, 'estoque': 30}
+]
+proximo_codigo_item = 5
+
+clientes = [
+    {'id': 1, 'nome': 'Ana Silva', 'telefone': '11987654321', 'endereco': 'Rua das Flores, 123'},
+    {'id': 2, 'nome': 'Bruno Costa', 'telefone': '21912345678', 'endereco': 'Avenida Central, 456'}
+]
+proximo_codigo_cliente = 3
+
+fila_pedidos_pendentes = [
+    {
+        'id': 1,
+        'cliente': 'Ana Silva',
+        'itens': [
+            {'id': 1, 'nome': 'Hambúrguer Clássico', 'quantidade': 2, 'preco_unitario': 25.50},
+            {'id': 2, 'nome': 'Batata Frita', 'quantidade': 1, 'preco_unitario': 15.00}
+        ],
+        'total': 66.00,
+        'status': 'AGUARDANDO APROVACAO'
+    }
+]
+todos_os_pedidos = list(fila_pedidos_pendentes)
+proximo_codigo_pedido = 2
+
 fila_pedidos_aceitos = []
 fila_pedidos_prontos = []
-# lista de clientes
-clientes = []
-proximo_codigo_cliente = 1
 
 
 # --- Loop Principal do Programa ---
@@ -47,7 +68,7 @@ while True:
                 
                 # Cria o item
                 novo_item = {
-                    'código': proximo_codigo_item,
+                    'id': proximo_codigo_item,
                     'nome': nome,
                     'descrição': descricao,
                     'preço': preco,
@@ -55,7 +76,7 @@ while True:
                 }
                 cardapio.append(novo_item)
                 proximo_codigo_item += 1
-                print(f"\nItem '{nome}' cadastrado com sucesso! Código: {novo_item['código']}")
+                print(f"\nItem '{nome}' cadastrado com sucesso! id: {novo_item['id']}")
             except ValueError:
                 print("\nERRO: Preço e estoque devem ser números. Operação cancelada.")
             input("Pressione Enter para continuar...")
@@ -68,7 +89,7 @@ while True:
                 print("Cardápio vazio.")
             else:
                 for item in cardapio:
-                    print(f"Cód: {item['código']} | {item['nome']} | R${item['preço']:.2f} | Estoque: {item['estoque']} | Desc: {item['descrição']}")
+                    print(f"Cód: {item['id']} | {item['nome']} | R${item['preço']:.2f} | Estoque: {item['estoque']} | Desc: {item['descrição']}")
             input("\nPressione Enter para continuar...")
 
         # --- 1.3 Atualizar Item (Funcionalidade Adicionada) ---
@@ -79,12 +100,12 @@ while True:
                 print("Cardápio vazio.")
             else:
                 for item in cardapio:
-                    print(f"Cód: {item['código']} | Nome: {item['nome']} | Estoque: {item['estoque']}")
+                    print(f"Cód: {item['id']} | Nome: {item['nome']} | Estoque: {item['estoque']}")
                 try:
-                    cod_atualizar = int(input("Digite o código do item para atualizar: "))
+                    cod_atualizar = int(input("Digite o id do item para atualizar: "))
                     item_encontrado = None
                     for item in cardapio:
-                        if item['código'] == cod_atualizar:
+                        if item['id'] == cod_atualizar:
                             item_encontrado = item
                             break
                     
@@ -104,9 +125,9 @@ while True:
                         except ValueError:
                             print("\nERRO: Preço ou estoque inválido. A atualização foi cancelada.")
                     else:
-                        print("\nCódigo do item não encontrado.")
+                        print("\nid do item não encontrado.")
                 except ValueError:
-                    print("\nERRO: O código deve ser um número. Operação cancelada.")
+                    print("\nERRO: O id deve ser um número. Operação cancelada.")
             input("Pressione Enter para continuar...")
 
         # --- Voltar ---
@@ -139,9 +160,9 @@ while True:
                 while True:
                     print("\n-- Cardápio --")
                     for item in cardapio:
-                        print(f"Cód: {item['código']} | {item['nome']} | R${item['preço']:.2f} | Estoque: {item['estoque']}")
+                        print(f"Cód: {item['id']} | {item['nome']} | R${item['preço']:.2f} | Estoque: {item['estoque']}")
                     
-                    codigo_str = input("Digite o código do item para adicionar (ou 'F' para finalizar): ").upper()
+                    codigo_str = input("Digite o id do item para adicionar (ou 'F' para finalizar): ").upper()
                     if codigo_str == 'F':
                         break
                     
@@ -149,7 +170,7 @@ while True:
                         cod_item_pedido = int(codigo_str)
                         item_selecionado = None
                         for item in cardapio:
-                            if item['código'] == cod_item_pedido:
+                            if item['id'] == cod_item_pedido:
                                 item_selecionado = item
                                 break
                         
@@ -157,7 +178,7 @@ while True:
                             qtd = int(input(f"Quantidade de '{item_selecionado['nome']}': "))
                             if 0 < qtd <= item_selecionado['estoque']:
                                 itens_do_pedido.append({
-                                    'código': item_selecionado['código'],
+                                    'id': item_selecionado['id'],
                                     'nome': item_selecionado['nome'],
                                     'quantidade': qtd,
                                     'preco_unitario': item_selecionado['preço']
@@ -168,7 +189,7 @@ while True:
                             else:
                                 print("Quantidade inválida ou estoque insuficiente.")
                         else:
-                            print("Código do item não encontrado.")
+                            print("id do item não encontrado.")
                     except ValueError:
                         print("Entrada inválida. Por favor, digite um número ou 'F'.")
                 
@@ -179,7 +200,7 @@ while True:
                     
                     # Cria o pedido como um dicionário
                     novo_pedido = {
-                        'código': proximo_codigo_pedido,
+                        'id': proximo_codigo_pedido,
                         'cliente': novo_cliente,
                         'itens': itens_do_pedido,
                         'total': total,
@@ -190,7 +211,7 @@ while True:
                     todos_os_pedidos.append(novo_pedido) # Adiciona na lista mestre
                     proximo_codigo_pedido += 1
                     
-                    print(f"\nPedido Cód: {novo_pedido['código']} criado com sucesso!")
+                    print(f"\nPedido Cód: {novo_pedido['id']} criado com sucesso!")
             input("Pressione Enter para continuar...")
 
         # --- Processar Pedido Pendente ---
@@ -203,7 +224,7 @@ while True:
                 # Pega o primeiro pedido da fila (FIFO)
                 pedido_a_processar = fila_pedidos_pendentes[0]
                 
-                print(f"Processando Pedido Cód: {pedido_a_processar['codigo']} | Cliente: {pedido_a_processar['cliente']}")
+                print(f"Processando Pedido Cód: {pedido_a_processar['id']} | Cliente: {pedido_a_processar['cliente']}")
                 for item_p in pedido_a_processar['itens']:
                     print(f"- {item_p['quantidade']}x {item_p['nome']}")
                 print(f"Total: R${pedido_a_processar['total']:.2f}")
@@ -222,7 +243,7 @@ while True:
                     # Restaura o estoque
                     for item_pedido in pedido_rejeitado['itens']:
                         for item_cardapio in cardapio:
-                            if item_pedido['código'] == item_cardapio['código']:
+                            if item_pedido['id'] == item_cardapio['id']:
                                 item_cardapio['estoque'] += item_pedido['quantidade']
                                 break
                     print("Pedido Rejeitado. Estoque dos itens foi restaurado.")
@@ -239,13 +260,13 @@ while True:
             else:
                 pedido_a_preparar = fila_pedidos_aceitos.pop(0)
                 pedido_a_preparar['status'] = 'FAZENDO'
-                print(f"Pedido Cód {pedido_a_preparar['código']} iniciou o preparo (status: FAZENDO).")
+                print(f"Pedido Cód {pedido_a_preparar['id']} iniciou o preparo (status: FAZENDO).")
                 
                 # Simulação de finalização do preparo
                 input("Pressione ENTER quando o pedido estiver pronto...")
                 pedido_a_preparar['status'] = 'FEITO'
                 fila_pedidos_prontos.append(pedido_a_preparar)
-                print(f"Pedido Cód {pedido_a_preparar['código']} está pronto e aguardando entregador.")
+                print(f"Pedido Cód {pedido_a_preparar['id']} está pronto e aguardando entregador.")
             input("Pressione Enter para continuar...")
 
         elif opcao_pedidos == '4':
@@ -270,7 +291,7 @@ while True:
                 print("Nenhum pedido foi criado ainda.")
             else:
                 for p in todos_os_pedidos:
-                    print(f"Cód: {p['código']} | Cliente: {p['cliente']} | Total: R${p['total']:.2f} | Status: {p['status']}")
+                    print(f"Cód: {p['id']} | Cliente: {p['cliente']} | Total: R${p['total']:.2f} | Status: {p['status']}")
             input("\nPressione Enter para continuar...")
 
         # --- Filtrar por Status  ---
@@ -281,7 +302,7 @@ while True:
             encontrados = False
             for p in todos_os_pedidos:
                 if p['status'] == status_filtro:
-                    print(f"Cód: {p['código']} | Cliente: {p['cliente']} | Total: R${p['total']:.2f}")
+                    print(f"Cód: {p['id']} | Cliente: {p['cliente']} | Total: R${p['total']:.2f}")
                     encontrados = True
             if not encontrados:
                 print(f"Nenhum pedido encontrado com o status '{status_filtro}'.")
@@ -310,14 +331,14 @@ while True:
             
             # Cria o cliente
             novo_cliente = {
-                'código': proximo_codigo_cliente,
+                'id': proximo_codigo_cliente,
                 'nome': nome,
                 'telefone': telefone,
                 'endereco': endereco
             }
 
             clientes.append(novo_cliente)
-            print(f"\nCliente '{nome}' cadastrado com sucesso! Código: {novo_cliente['código']}")
+            print(f"\nCliente '{nome}' cadastrado com sucesso! id: {novo_cliente['id']}")
             proximo_codigo_cliente += 1
         
         elif opcao_clientes == '2':
@@ -327,7 +348,7 @@ while True:
                 print("Nenhum cliente cadastrado.")
             else:
                 for cliente in clientes:
-                    print(f"cód: {cliente['código']} | Nome: {cliente['nome']} | Telefone: {cliente['telefone']}")
+                    print(f"cód: {cliente['id']} | Nome: {cliente['nome']} | Telefone: {cliente['telefone']}")
 
         elif opcao_clientes == '3':
             pass
