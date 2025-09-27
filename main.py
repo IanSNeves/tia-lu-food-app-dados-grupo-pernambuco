@@ -5,7 +5,7 @@ cardapio = [
     {'id': 4, 'nome': 'Pizza Margherita', 'descrição': 'Molho de tomate, mussarela e manjericão', 'preço': 45.00, 'estoque': 30}
 ]
 proximo_codigo_item = 5
-
+fdjhfd
 clientes = [
     {'id': 1, 'nome': 'Ana Silva', 'telefone': '11987654321', 'endereco': 'Rua das Flores, 123'},
     {'id': 2, 'nome': 'Bruno Costa', 'telefone': '21912345678', 'endereco': 'Avenida Central, 456'}
