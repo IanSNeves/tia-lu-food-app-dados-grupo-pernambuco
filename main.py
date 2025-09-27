@@ -5,24 +5,29 @@ proximo_codigo_pedido = 1
 fila_pedidos_pendentes = []
 fila_pedidos_aceitos = []
 fila_pedidos_prontos = []
+# lista de clientes
+clientes = []
+proximo_codigo_cliente = 1
+
 
 # --- Loop Principal do Programa ---
 while True:
-    print("\n" * 50)
+    print("\n" * 3)
     print("="*40)
     print("   Sistema de Pedidos Tia Lu Delivery")
     print("="*40)
     print("1. Gerenciar Menu de Itens")
     print("2. Gerenciar Menu de Pedidos")
     print("3. Consultas e Relatórios")
-    print("4. Sair do Sistema")
+    print("4. Cadastrar Cliente")
+    print("5. Sair do Sistema")
     print("="*40)
     
     opcao_principal = input("Escolha uma opção: ")
 
     # === MÓDULO 1: GERENCIAR MENU DE ITENS =========
     if opcao_principal == '1':
-        print("\n" * 50)
+        print("\n" * 3)
         print("--- Gerenciar Menu de Itens ---")
         print("1. Cadastrar Item")
         print("2. Consultar Itens")
@@ -32,7 +37,7 @@ while True:
 
         # --- Cadastrar Item ---
         if opcao_itens == '1':
-            print("\n" * 50)
+            print("\n" * 3)
             print("-- Cadastro de Novo Item --")
             nome = input("Nome do item: ")
             descricao = input("Descrição do item: ")
@@ -57,7 +62,7 @@ while True:
 
         # --- Consultar Itens ---
         elif opcao_itens == '2':
-            print("\n" * 50)
+            print("\n" * 3)
             print("-- Cardápio Completo --")
             if not cardapio:
                 print("Cardápio vazio.")
@@ -68,7 +73,7 @@ while True:
 
         # --- 1.3 Atualizar Item (Funcionalidade Adicionada) ---
         elif opcao_itens == '3':
-            print("\n" * 50)
+            print("\n" * 3)
             print("-- Atualização de Item --")
             if not cardapio:
                 print("Cardápio vazio.")
@@ -84,15 +89,20 @@ while True:
                             break
                     
                     if item_encontrado:
+                        
                         print(f"\nAtualizando item: {item_encontrado['nome']}")
                         novo_nome = input(f"Novo nome (deixe em branco para manter '{item_encontrado['nome']}'): ")
                         novo_preco_str = input(f"Novo preço (deixe em branco para manter R${item_encontrado['preço']:.2f}): ")
                         novo_estoque_str = input(f"Novo estoque (deixe em branco para manter {item_encontrado['estoque']}): ")
 
-                        if novo_nome: item_encontrado['nome'] = novo_nome
-                        if novo_preco_str: item_encontrado['preço'] = float(novo_preco_str)
-                        if novo_estoque_str: item_encontrado['estoque'] = int(novo_estoque_str)
-                        print("\nItem atualizado com sucesso!")
+                        try:
+
+                            if novo_nome: item_encontrado['nome'] = novo_nome
+                            if novo_preco_str: item_encontrado['preço'] = float(novo_preco_str)
+                            if novo_estoque_str: item_encontrado['estoque'] = int(novo_estoque_str)
+                            print("\nItem atualizado com sucesso!")
+                        except ValueError:
+                            print("\nERRO: Preço ou estoque inválido. A atualização foi cancelada.")
                     else:
                         print("\nCódigo do item não encontrado.")
                 except ValueError:
@@ -107,7 +117,7 @@ while True:
 
     # === MÓDULO 2: GERENCIAR MENU DE PEDIDOS =======
     elif opcao_principal == '2':
-        print("\n" * 50)
+        print("\n" * 3)
         print("--- Gerenciar Menu de Pedidos ---")
         print("1. Criar Pedido")
         print("2. Processar Pedido Pendente (Aceitar/Rejeitar)")
@@ -117,12 +127,12 @@ while True:
 
         # --- Criar Pedido ---
         if opcao_pedidos == '1':
-            print("\n" * 50)
+            print("\n" * 3)
             print("-- Criação de Novo Pedido --")
             if not cardapio:
                 print("Não é possível criar pedidos, pois o cardápio está vazio.")
             else:
-                nome_cliente = input("Nome do cliente: ")
+                novo_cliente = input("Nome do cliente: ")
                 itens_do_pedido = []
                 subtotal = 0.0
                 
@@ -170,7 +180,7 @@ while True:
                     # Cria o pedido como um dicionário
                     novo_pedido = {
                         'código': proximo_codigo_pedido,
-                        'cliente': nome_cliente,
+                        'cliente': novo_cliente,
                         'itens': itens_do_pedido,
                         'total': total,
                         'status': 'AGUARDANDO APROVACAO'
@@ -185,15 +195,15 @@ while True:
 
         # --- Processar Pedido Pendente ---
         elif opcao_pedidos == '2':
-            print("\n" * 50)
+            print("\n" * 3)
             print("-- Processamento de Pedidos Pendentes --")
             if not fila_pedidos_pendentes:
                 print("Não há pedidos pendentes para processar.")
             else:
                 # Pega o primeiro pedido da fila (FIFO)
-                pedido_a_processar = fila_pedidos_pendentes
+                pedido_a_processar = fila_pedidos_pendentes[0]
                 
-                print(f"Processando Pedido Cód: {pedido_a_processar.codigo} | Cliente: {pedido_a_processar['cliente']}")
+                print(f"Processando Pedido Cód: {pedido_a_processar['codigo']} | Cliente: {pedido_a_processar['cliente']}")
                 for item_p in pedido_a_processar['itens']:
                     print(f"- {item_p['quantidade']}x {item_p['nome']}")
                 print(f"Total: R${pedido_a_processar['total']:.2f}")
@@ -222,7 +232,7 @@ while True:
 
         # --- Atualizar Status ---
         elif opcao_pedidos == '3':
-            print("\n" * 50)
+            print("\n" * 3)
             print("-- Iniciar Preparo de Pedido --")
             if not fila_pedidos_aceitos:
                 print("Nenhum pedido na fila de preparo.")
@@ -245,7 +255,7 @@ while True:
 
     # === MÓDULO 3: CONSULTAS E RELATÓRIOS ==========
     elif opcao_principal == '3':
-        print("\n" * 50)
+        print("\n" * 3)
         print("--- Consultas e Relatórios ---")
         print("1. Exibir todos os pedidos")
         print("2. Filtrar pedidos por status")
@@ -254,7 +264,7 @@ while True:
 
         # --- Exibir Todos os Pedidos ---
         if opcao_consultas == '1':
-            print("\n" * 50)
+            print("\n" * 3)
             print("-- Todos os Pedidos Registrados --")
             if not todos_os_pedidos:
                 print("Nenhum pedido foi criado ainda.")
@@ -265,7 +275,7 @@ while True:
 
         # --- Filtrar por Status  ---
         elif opcao_consultas == '2':
-            print("\n" * 50)
+            print("\n" * 3)
             status_filtro = input("Digite o status para filtrar (ex: FAZENDO, ACEITO): ").upper()
             print(f"\n-- Pedidos com Status: {status_filtro} --")
             encontrados = False
@@ -283,8 +293,51 @@ while True:
         else:
             input("Opção inválida. Pressione Enter para continuar...")
     
-    # === SAÍDA DO SISTEMA
+    # === MÓDULO 4: CADASTRAR CLIENTE ===============
+    # --- Cadastrar Cliente
     elif opcao_principal == '4':
+        print("\n" * 3)
+        print("-- Cadastro de Novo Cliente --")
+        print("1. Cadastrar novo cliente")
+        print("2. Listar todos os clientes")
+        print("3. Voltar ao Menu Principal")
+        opcao_clientes = input("Escolha uma opção: ")
+
+        if opcao_clientes == '1':
+            nome = input("Nome do cliente: ")
+            telefone = input("Telefone do cliente: ")
+            endereco = input("Endereço do cliente: ")
+            
+            # Cria o cliente
+            novo_cliente = {
+                'código': proximo_codigo_cliente,
+                'nome': nome,
+                'telefone': telefone,
+                'endereco': endereco
+            }
+
+            clientes.append(novo_cliente)
+            print(f"\nCliente '{nome}' cadastrado com sucesso! Código: {novo_cliente['código']}")
+            proximo_codigo_cliente += 1
+        
+        elif opcao_clientes == '2':
+            print("\n" * 3)
+            print("-- Lista de Clientes Cadastrados --")
+            if not clientes:
+                print("Nenhum cliente cadastrado.")
+            else:
+                for cliente in clientes:
+                    print(f"cód: {cliente['código']} | Nome: {cliente['nome']} | Telefone: {cliente['telefone']}")
+
+        elif opcao_clientes == '3':
+            pass
+
+        else:
+            input("Opção inválida. Pressione Enter para continuar...")
+
+
+    # === SAÍDA DO SISTEMA
+    elif opcao_principal == '5':
         print("Saindo do sistema. Obrigado por usar o Tia Lu Delivery!")
         break
     else:
