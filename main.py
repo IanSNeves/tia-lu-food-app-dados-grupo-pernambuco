@@ -11,7 +11,6 @@ proximo_codigo_pedido = 2
 fila_pedidos_aceitos = []
 fila_pedidos_prontos = []
 
-
 # --- Loop Principal do Programa ---
 while True:
     print("\n" * 3)
