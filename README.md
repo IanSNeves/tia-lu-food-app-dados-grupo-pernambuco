@@ -19,7 +19,6 @@ Gerenciamento de Clientes
 ### Consultas
 - [ ] Filtrar Pedidos por Status: Implementar a funcionalidade de filtrar pedidos por status.
 
-
 # 2. CORREÇÕES E INCONSISTÊNCIAS
 
 ### Fluxo de Status dos Pedidos

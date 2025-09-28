@@ -337,3 +337,4 @@ while True:
         break
     else:
         input("Opção principal inválida. Pressione Enter para continuar...")
+        
