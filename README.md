@@ -101,5 +101,5 @@ O sistema permite:
 ## ▶️ Como Executar
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/IanSNeves/Sistema-de-Pedidos
+   git clone https://github.com/IanSNeves/tia-lu-food-app-dados-grupo-pernambuco
    cd repositorio
